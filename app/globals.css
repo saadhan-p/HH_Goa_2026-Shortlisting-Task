@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hh-dark: #021a10;
+  --color-hh-darker: #01120b;
+  --color-hh-darkest: #000c07;
+  --color-hh-yellow: #f3e03b;
+  --color-hh-pink: #ff007f;
+  
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  --animate-scan: scan 6s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animations */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Custom Utilities */
+:root {
+  --background: #021a10;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-mono), monospace;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Technical dot background grid */
+.tech-grid {
+  background-image: 
+    radial-gradient(rgba(5, 61, 36, 0.4) 1px, transparent 1px),
+    radial-gradient(rgba(5, 61, 36, 0.4) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* Monospace scanline effect */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+.scanlines::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+
+/* Custom scrollbars for a clean tech look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #01120b;
+}
+::-webkit-scrollbar-thumb {
+  background: #053d24;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f3e03b;
+}
+
+/* Terminal text glow */
+.glow-yellow {
+  text-shadow: 0 0 5px rgba(243, 224, 59, 0.5), 0 0 10px rgba(243, 224, 59, 0.3);
+}
+.glow-pink {
+  text-shadow: 0 0 5px rgba(255, 0, 127, 0.5), 0 0 10px rgba(255, 0, 127, 0.3);
+}
+
+/* Interactive touch target classes */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
