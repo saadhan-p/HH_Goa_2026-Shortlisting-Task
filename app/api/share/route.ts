@@ -22,11 +22,36 @@ export async function POST(req: Request) {
         });
         return NextResponse.json({ url: blob.url });
       } catch (blobErr) {
-        console.error('Vercel Blob upload failed, trying local fallback:', blobErr);
+        console.error('Vercel Blob upload failed, trying fallback:', blobErr);
       }
     }
 
-    // 2. Local Fallback for local development
+    // 2. If running on Vercel but Blob is not connected, use anonymous public upload (catbox.moe) as a zero-config fallback
+    const isVercel = process.env.VERCEL === '1';
+    if (isVercel) {
+      try {
+        const catboxFormData = new FormData();
+        catboxFormData.append('reqtype', 'fileupload');
+        catboxFormData.append('fileToUpload', image, filename);
+
+        const catboxRes = await fetch('https://catbox.moe/user/api.php', {
+          method: 'POST',
+          body: catboxFormData,
+        });
+
+        if (catboxRes.ok) {
+          const fileUrl = await catboxRes.text();
+          return NextResponse.json({ url: fileUrl.trim() });
+        } else {
+          throw new Error(`Catbox upload status: ${catboxRes.status}`);
+        }
+      } catch (catboxErr) {
+        console.error('Catbox upload fallback failed:', catboxErr);
+        // Fall through to local write (which will fail with EROFS, showing the write error as a last resort)
+      }
+    }
+
+    // 3. Local Fallback for local development
     const arrayBuffer = await image.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 

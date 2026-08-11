@@ -124,7 +124,7 @@ Ready to build, break, and ship in Goa.
         console.log('Share request aborted');
       } else {
         console.error('Sharing failed:', err);
-        setShowShareModal(true);
+        alert('Could not compile share link. Please download the image and attach it directly to your share post!');
       }
     } finally {
       setIsSharing(false);
