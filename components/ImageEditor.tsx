@@ -19,9 +19,9 @@ export default function ImageEditor({
   onReset,
 }: ImageEditorProps) {
   return (
-    <div className="w-full border border-[#053d24] bg-hh-darker/40 p-4 rounded font-mono text-xs space-y-5">
-      <div className="flex items-center justify-between border-b border-[#053d24] pb-2 text-[10px] text-gray-500 uppercase tracking-widest">
-        <span>IMAGE_CALIBRATION_PROTOCOL</span>
+    <div className="w-full border border-[#053d24] bg-hh-darker/40 p-3.5 sm:p-4 rounded font-mono text-xs space-y-4 sm:space-y-5">
+      <div className="flex items-center justify-between gap-2 border-b border-[#053d24] pb-2 text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest">
+        <span className="truncate">IMAGE_CALIBRATION_PROTOCOL</span>
         <button
           onClick={onReset}
           className="flex items-center gap-1 text-hh-pink hover:text-white cursor-pointer touch-target px-2 rounded hover:bg-hh-darkest/50 transition-all active:scale-95"
@@ -34,13 +34,13 @@ export default function ImageEditor({
       {/* Zoom Control */}
       <div className="space-y-2">
         <div className="flex justify-between items-center text-gray-400">
-          <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[11px]">
+          <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
             <ZoomIn size={12} className="text-hh-yellow" />
             ZOOM SCALE
           </span>
           <span className="text-white text-xs">{(zoom * 100).toFixed(0)}%</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <ZoomOut size={14} className="text-gray-500" />
           <input
             type="range"
@@ -57,17 +57,17 @@ export default function ImageEditor({
       </div>
 
       {/* Positioning Coordinates */}
-      <div className="space-y-4 pt-1">
+      <div className="space-y-3.5 sm:space-y-4 pt-1">
         {/* Horizontal Position X */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-gray-400">
-            <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[11px]">
+            <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
               <Move size={12} className="text-hh-yellow" />
               HORIZONTAL SHIFT
             </span>
             <span className="text-white text-xs">{positionX}%</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <span className="text-gray-500 text-xs font-bold">L</span>
             <input
               type="range"
@@ -86,13 +86,13 @@ export default function ImageEditor({
         {/* Vertical Position Y */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-gray-400">
-            <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[11px]">
+            <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
               <Move size={12} className="text-hh-yellow" />
               VERTICAL SHIFT
             </span>
             <span className="text-white text-xs">{positionY}%</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <span className="text-gray-500 text-xs font-bold">D</span>
             <input
               type="range"

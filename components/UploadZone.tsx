@@ -36,7 +36,7 @@ export default function UploadZone({ onFileSelect }: UploadZoneProps) {
           type: 'image/jpeg',
         });
         onFileSelect(jpegFile);
-      } catch (err) {
+      } catch {
         setErrorMsg('Your HEIC photo couldn\'t be processed. Try another image.');
       } finally {
         setIsConverting(false);
@@ -85,14 +85,14 @@ export default function UploadZone({ onFileSelect }: UploadZoneProps) {
   };
 
   return (
-    <div className="w-full flex flex-col gap-3 font-mono">
+    <div className="w-full flex flex-col gap-2.5 sm:gap-3 font-mono">
       <div
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
         onDrop={handleDrop}
         onClick={onZoneClick}
-        className={`w-full min-h-[160px] border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+        className={`w-full min-h-[124px] sm:min-h-[160px] border-2 border-dashed rounded-lg p-4 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
           isDragActive
             ? 'border-hh-yellow bg-hh-darker/70 scale-[1.01]'
             : 'border-[#053d24] bg-hh-darker/35 hover:border-hh-yellow/60 hover:bg-hh-darker/50'
@@ -108,23 +108,23 @@ export default function UploadZone({ onFileSelect }: UploadZoneProps) {
         />
 
         {isConverting ? (
-          <div className="flex flex-col items-center gap-3">
-            <Loader2 className="animate-spin text-hh-yellow" size={32} />
-            <p className="text-sm font-bold text-hh-yellow uppercase tracking-wider animate-pulse-slow">
+          <div className="flex flex-col items-center gap-2 sm:gap-3">
+            <Loader2 className="animate-spin text-hh-yellow" size={28} />
+            <p className="text-xs sm:text-sm font-bold text-hh-yellow uppercase tracking-wider animate-pulse-slow">
               PROCESSING HEIC PHOTO...
             </p>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-3">
-            <div className="p-3 border border-[#053d24] rounded-full text-gray-400 bg-hh-darkest/50">
-              <Upload size={22} className="text-hh-yellow" />
+          <div className="flex flex-col items-center gap-2 sm:gap-3">
+            <div className="p-2.5 sm:p-3 border border-[#053d24] rounded-full text-gray-400 bg-hh-darkest/50">
+              <Upload size={20} className="text-hh-yellow" />
             </div>
             
             <div>
-              <p className="text-sm text-white font-bold uppercase tracking-wider">
+              <p className="text-xs sm:text-sm text-white font-bold uppercase tracking-wider">
                 DROP YOUR PHOTO OR TAP TO SELECT
               </p>
-              <p className="text-xs text-gray-500 mt-1 uppercase">
+              <p className="text-[10px] sm:text-xs text-gray-500 mt-1 uppercase">
                 JPG / PNG / HEIC (MAX 20MB)
               </p>
             </div>
@@ -134,7 +134,7 @@ export default function UploadZone({ onFileSelect }: UploadZoneProps) {
 
       {/* Error Alert Box */}
       {errorMsg && (
-        <div className="w-full bg-[#3d0505]/40 border border-[#8a1c1c] text-[#ff6b6b] p-3.5 rounded flex items-start gap-2.5 text-xs">
+        <div className="w-full bg-[#3d0505]/40 border border-[#8a1c1c] text-[#ff6b6b] p-3 rounded flex items-start gap-2.5 text-[10px] sm:text-xs">
           <AlertTriangle size={16} className="shrink-0 mt-0.5" />
           <div className="flex flex-col gap-0.5 uppercase tracking-wide">
             <span className="font-bold">COMPILATION_ERROR:</span>

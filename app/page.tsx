@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, ShieldAlert, Cpu, ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import Hero from '../components/Hero';
 import ModeSelector from '../components/ModeSelector';
 import UploadZone from '../components/UploadZone';
@@ -43,6 +43,12 @@ export default function Home() {
   const handleStart = (selectedMode: 'card' | 'pfp') => {
     setState((prev) => ({ ...prev, mode: selectedMode }));
     setShowGenerator(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleHome = () => {
+    setShowGenerator(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleFileSelect = (file: File) => {
@@ -83,18 +89,18 @@ export default function Home() {
       )}
 
       {/* Main Header / Navigation */}
-      <header className="w-full border-b border-[#053d24] bg-hh-darker/80 backdrop-blur-md sticky top-0 z-40 px-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between py-4">
+      <header className="w-full border-b border-[#053d24] bg-hh-darker/80 backdrop-blur-md sticky top-0 z-40 px-3 sm:px-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 py-3 sm:py-4">
           <div 
-            onClick={() => setShowGenerator(false)} 
-            className="flex items-center gap-2 cursor-pointer group"
+            onClick={handleHome} 
+            className="min-w-0 flex items-center gap-2 cursor-pointer group"
           >
-            <span className="font-bold text-sm tracking-wider hover:text-hh-yellow transition-colors flex items-center gap-1.5">
-              HH GOA 2026 <span className="text-hh-pink group-hover:text-hh-yellow transition-colors">// IDENTITY</span>
+            <span className="font-bold text-[11px] xs:text-xs sm:text-sm tracking-wider hover:text-hh-yellow transition-colors flex flex-col min-[390px]:flex-row min-[390px]:items-center min-[390px]:gap-1.5 leading-tight">
+              HH GOA 2026 <span className="text-hh-pink group-hover:text-hh-yellow transition-colors">{'// IDENTITY'}</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-[10px] text-gray-400">
+          <div className="shrink-0 flex items-center gap-2 sm:gap-3 text-[10px] text-gray-400">
             <span className="hidden sm:inline border border-[#053d24] bg-hh-darkest/60 px-2 py-0.5 rounded text-green-400 uppercase tracking-widest text-[9px] font-bold">
               SYS_REV // 1.0.2
             </span>
@@ -102,7 +108,7 @@ export default function Home() {
               href="https://hacker-house-goa-2026.devfolio.co/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-hh-yellow flex items-center gap-0.5 touch-target p-1 border border-transparent hover:border-[#053d24] hover:bg-hh-darkest/50 rounded transition-all"
+              className="hover:text-hh-yellow flex items-center gap-0.5 touch-target px-2 py-1 border border-[#053d24] sm:border-transparent hover:border-[#053d24] hover:bg-hh-darkest/50 rounded transition-all text-[10px]"
             >
               DEVFOLIO
               <ArrowUpRight size={10} />
@@ -112,7 +118,7 @@ export default function Home() {
       </header>
 
       {/* Content Container */}
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-8 flex flex-col items-center justify-center">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8 flex flex-col items-center justify-center">
         {!showGenerator ? (
           <Hero onStart={handleStart} />
         ) : (
@@ -120,8 +126,8 @@ export default function Home() {
             {/* Back button */}
             <div className="flex">
               <button
-                onClick={() => setShowGenerator(false)}
-                className="touch-target border border-[#053d24] hover:border-hh-yellow bg-hh-darker/40 text-xs font-bold uppercase tracking-wider px-4 py-2 rounded flex items-center gap-2 transition-all cursor-pointer hover:bg-hh-darkest/60 active:scale-95"
+                onClick={handleHome}
+                className="touch-target border border-[#053d24] hover:border-hh-yellow bg-hh-darker/40 text-[10px] sm:text-xs font-bold uppercase tracking-wider px-3 sm:px-4 py-2 rounded flex items-center gap-2 transition-all cursor-pointer hover:bg-hh-darkest/60 active:scale-95"
               >
                 <ArrowLeft size={14} />
                 BACK_TO_HOME
@@ -129,19 +135,19 @@ export default function Home() {
             </div>
 
             {/* Grid Layout - Responsive Column Splits */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start">
               
               {/* Controls Column (left on desktop, bottom on mobile if preview fits first) */}
-              <div className="lg:col-span-5 order-2 lg:order-1 space-y-6">
-                <div className="border border-[#053d24] bg-hh-darker/20 p-5 rounded-lg space-y-5">
-                  <div className="flex items-center justify-between border-b border-[#053d24] pb-3 text-xs font-bold text-hh-yellow uppercase tracking-widest">
+              <div className="lg:col-span-5 order-2 lg:order-1 space-y-5 sm:space-y-6">
+                <div className="border border-[#053d24] bg-hh-darker/20 p-3.5 sm:p-5 rounded-lg space-y-4 sm:space-y-5">
+                  <div className="flex flex-col min-[390px]:flex-row min-[390px]:items-center min-[390px]:justify-between gap-1.5 border-b border-[#053d24] pb-3 text-[10px] sm:text-xs font-bold text-hh-yellow uppercase tracking-widest">
                     <span>CONSTRUCT_PARAMETERS</span>
                     <span className="text-[10px] text-gray-500">INIT // ID_GENERATION</span>
                   </div>
 
                   {/* Mode Selector */}
                   <div className="space-y-1.5">
-                    <label className="block text-[10px] text-gray-500 uppercase tracking-widest">
+                    <label className="block text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest">
                       CHOOSE GENERATOR FORMAT
                     </label>
                     <ModeSelector
@@ -152,7 +158,7 @@ export default function Home() {
 
                   {/* Upload Area */}
                   <div className="space-y-1.5">
-                    <label className="block text-[10px] text-gray-500 uppercase tracking-widest">
+                    <label className="block text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest">
                       UPLOAD PORTRAIT PHOTO
                     </label>
                     <UploadZone onFileSelect={handleFileSelect} />
@@ -181,7 +187,7 @@ export default function Home() {
               </div>
 
               {/* Viewport/Preview Column (right on desktop, top on mobile) */}
-              <div className="lg:col-span-7 order-1 lg:order-2 space-y-6 lg:sticky lg:top-24">
+              <div className="lg:col-span-7 order-1 lg:order-2 space-y-4 sm:space-y-6 lg:sticky lg:top-24">
                 <BuilderPreview
                   state={state}
                   canvasRef={canvasRef}

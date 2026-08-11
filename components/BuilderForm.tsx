@@ -39,10 +39,10 @@ export default function BuilderForm({
   };
 
   return (
-    <div className="w-full space-y-4 font-mono text-xs">
+    <div className="w-full space-y-3.5 sm:space-y-4 font-mono text-xs">
       {/* Name Input */}
       <div className="space-y-1">
-        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[11px]">
+        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[10px] sm:text-[11px]">
           <User size={13} />
           BUILDER NAME
         </label>
@@ -52,9 +52,9 @@ export default function BuilderForm({
             value={name}
             onChange={handleNameChange}
             placeholder="e.g. SAADHAN P"
-            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded px-3 py-2.5 text-white placeholder-gray-600 focus:outline-none transition-all"
+            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded py-3 pl-3 pr-12 text-base sm:text-xs text-white placeholder-gray-600 focus:outline-none transition-all"
           />
-          <span className="absolute right-3 top-3 text-[10px] text-gray-600">
+          <span className="absolute right-3 top-3.5 sm:top-3 text-[10px] text-gray-600">
             {name.length}/24
           </span>
         </div>
@@ -62,7 +62,7 @@ export default function BuilderForm({
 
       {/* Stack Input */}
       <div className="space-y-1">
-        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[11px]">
+        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[10px] sm:text-[11px]">
           <Cpu size={13} />
           PRIMARY STACK
         </label>
@@ -72,9 +72,9 @@ export default function BuilderForm({
             value={stack}
             onChange={handleStackChange}
             placeholder="e.g. CYBERSECURITY, PYTORCH, FRONTEND"
-            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded px-3 py-2.5 text-white placeholder-gray-600 focus:outline-none transition-all"
+            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded py-3 pl-3 pr-12 text-base sm:text-xs text-white placeholder-gray-600 focus:outline-none transition-all"
           />
-          <span className="absolute right-3 top-3 text-[10px] text-gray-600">
+          <span className="absolute right-3 top-3.5 sm:top-3 text-[10px] text-gray-600">
             {stack.length}/24
           </span>
         </div>
@@ -82,7 +82,7 @@ export default function BuilderForm({
 
       {/* Role / Developer Title */}
       <div className="space-y-1">
-        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[11px]">
+        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[10px] sm:text-[11px]">
           <Briefcase size={13} />
           ROLE / SPECIALIZATION
         </label>
@@ -92,9 +92,9 @@ export default function BuilderForm({
             value={role}
             onChange={handleRoleChange}
             placeholder="e.g. SIGNAL PLOTTER or INFRA ENGINE"
-            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded px-3 py-2.5 text-white placeholder-gray-600 focus:outline-none transition-all"
+            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded py-3 pl-3 pr-12 text-base sm:text-xs text-white placeholder-gray-600 focus:outline-none transition-all"
           />
-          <span className="absolute right-3 top-3 text-[10px] text-gray-600">
+          <span className="absolute right-3 top-3.5 sm:top-3 text-[10px] text-gray-600">
             {role.length}/24
           </span>
         </div>
@@ -102,7 +102,7 @@ export default function BuilderForm({
 
       {/* Team Name Input */}
       <div className="space-y-1">
-        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[11px]">
+        <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[10px] sm:text-[11px]">
           <Users size={13} />
           TEAM NAME
         </label>
@@ -112,9 +112,9 @@ export default function BuilderForm({
             value={builderTitle}
             onChange={handleTeamNameChange}
             placeholder="e.g. THE COFFEE CODECS"
-            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded px-3 py-2.5 text-white placeholder-gray-600 focus:outline-none transition-all"
+            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded py-3 pl-3 pr-12 text-base sm:text-xs text-white placeholder-gray-600 focus:outline-none transition-all"
           />
-          <span className="absolute right-3 top-3 text-[10px] text-gray-600">
+          <span className="absolute right-3 top-3.5 sm:top-3 text-[10px] text-gray-600">
             {builderTitle.length}/24
           </span>
         </div>
