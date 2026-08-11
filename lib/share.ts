@@ -14,10 +14,13 @@ See you in Goa.
  */
 export function isFileSharingSupported(file: File): boolean {
   if (typeof navigator === 'undefined') return false;
-  const nav = navigator as any;
+  const nav = navigator as unknown as {
+    share?: (data: { files: File[]; title?: string; text?: string }) => Promise<void>;
+    canShare?: (data: { files: File[] }) => boolean;
+  };
   return !!(
-    'share' in nav &&
-    'canShare' in nav &&
+    nav.share &&
+    nav.canShare &&
     nav.canShare({ files: [file] })
   );
 }

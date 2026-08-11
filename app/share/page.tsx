@@ -57,7 +57,7 @@ export default async function SharePage({ searchParams }: SharePageProps) {
         <div className="max-w-6xl mx-auto flex items-center justify-between py-4">
           <Link href="/" className="flex items-center gap-2 group cursor-pointer">
             <span className="font-bold text-sm tracking-wider hover:text-hh-yellow transition-colors flex items-center gap-1.5">
-              HH GOA 2026 <span className="text-hh-pink group-hover:text-hh-yellow transition-colors">// IDENTITY</span>
+              HH GOA 2026 <span className="text-hh-pink group-hover:text-hh-yellow transition-colors">{'// IDENTITY'}</span>
             </span>
           </Link>
 

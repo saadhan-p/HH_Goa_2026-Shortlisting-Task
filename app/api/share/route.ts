@@ -64,8 +64,9 @@ export async function POST(req: Request) {
     fs.writeFileSync(filePath, buffer);
 
     return NextResponse.json({ url: `/shares/${filename}` });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('API Share Error:', error);
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Internal Server Error';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
