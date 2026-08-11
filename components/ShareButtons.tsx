@@ -77,15 +77,12 @@ export default function ShareButtons({
         method: 'POST',
         body: formData,
       });
-
       if (!res.ok) throw new Error('Share upload failed');
       const data = await res.json();
-      const id = data.id;
       
       const origin = window.location.origin;
-      const url = `${origin}/share/${id}`;
+      const url = `${origin}/share?img=${encodeURIComponent(data.url)}`;
       setShareUrl(url);
-
       const customCaption = `I just unlocked my HH Goa 2026 builder identity ⚡
 
 NAME: ${state.name || 'Anonymous'}

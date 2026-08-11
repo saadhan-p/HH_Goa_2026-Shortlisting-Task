@@ -4,16 +4,18 @@ import { ArrowLeft, Download, ExternalLink } from 'lucide-react';
 import { headers } from 'next/headers';
 
 interface SharePageProps {
-  params: Promise<{ id: string }>;
+  searchParams: Promise<{ img?: string }>;
 }
 
-export async function generateMetadata({ params }: SharePageProps): Promise<Metadata> {
-  const { id } = await params;
+export async function generateMetadata({ searchParams }: SharePageProps): Promise<Metadata> {
+  const resolvedParams = await searchParams;
+  const img = resolvedParams.img || '';
   const headersList = await headers();
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = host.includes('localhost') ? 'http' : 'https';
   const origin = `${protocol}://${host}`;
-  const imageUrl = `${origin}/shares/${id}.png`;
+  
+  const imageUrl = img.startsWith('http') ? img : `${origin}${img}`;
 
   return {
     title: 'HH GOA 2026 — BUILDER IDENTITY',
@@ -40,9 +42,9 @@ export async function generateMetadata({ params }: SharePageProps): Promise<Meta
   };
 }
 
-export default async function SharePage({ params }: SharePageProps) {
-  const { id } = await params;
-  const imageUrl = `/shares/${id}.png`;
+export default async function SharePage({ searchParams }: SharePageProps) {
+  const resolvedParams = await searchParams;
+  const img = resolvedParams.img || '';
 
   return (
     <div className="flex flex-col min-h-screen bg-hh-dark tech-grid relative font-mono text-white selection:bg-hh-yellow selection:text-hh-dark">
@@ -81,40 +83,48 @@ export default async function SharePage({ params }: SharePageProps) {
         <div className="w-full max-w-md border border-[#053d24] bg-hh-darker/60 rounded-lg overflow-hidden shadow-2xl p-6 flex flex-col items-center gap-5">
           <div className="flex items-center justify-between w-full border-b border-[#053d24] pb-3 text-xs font-bold text-hh-yellow uppercase tracking-widest">
             <span>SHARED_IDENTITY</span>
-            <span className="text-[10px] text-gray-500">ID: {id}</span>
+            <span className="text-[10px] text-gray-500">COMPILED // OK</span>
           </div>
 
           <div className="relative w-full shadow-2xl border border-[#053d24] rounded-sm group overflow-hidden bg-hh-darkest scanlines">
-            <img
-              src={imageUrl}
-              alt="HH Goa 2026 Builder Card"
-              className="w-full h-auto object-contain block select-none"
-            />
+            {img ? (
+              <img
+                src={img}
+                alt="HH Goa 2026 Builder Card"
+                className="w-full h-auto object-contain block select-none"
+              />
+            ) : (
+              <div className="p-12 text-center text-gray-500 uppercase">
+                No image loaded
+              </div>
+            )}
             <div className="absolute inset-0 pointer-events-none border border-transparent group-hover:border-hh-yellow/10 transition-colors">
               <div className="absolute left-0 w-full h-[2px] bg-hh-yellow/15 shadow-[0_0_8px_rgba(243,224,59,0.3)] animate-scan top-0" />
             </div>
           </div>
 
-          <div className="w-full flex gap-3">
-            <a
-              href={imageUrl}
-              download={`hh-goa-2026-builder-${id}.png`}
-              className="flex-1 touch-target bg-hh-yellow text-hh-dark hover:bg-white transition-all font-bold text-xs tracking-wider uppercase py-3 px-5 rounded flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95"
-            >
-              <Download size={16} />
-              <span>DOWNLOAD</span>
-            </a>
-            
-            <a
-              href={imageUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 touch-target border border-hh-pink hover:bg-hh-pink hover:text-white text-hh-pink transition-all font-bold text-xs tracking-wider uppercase py-3 px-5 rounded flex items-center justify-center gap-2 cursor-pointer active:scale-95"
-            >
-              <ExternalLink size={16} />
-              <span>OPEN FULL IMAGE</span>
-            </a>
-          </div>
+          {img && (
+            <div className="w-full flex gap-3">
+              <a
+                href={img}
+                download="hh-goa-2026-builder.png"
+                className="flex-1 touch-target bg-hh-yellow text-hh-dark hover:bg-white transition-all font-bold text-xs tracking-wider uppercase py-3 px-5 rounded flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95"
+              >
+                <Download size={16} />
+                <span>DOWNLOAD</span>
+              </a>
+              
+              <a
+                href={img}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 touch-target border border-hh-pink hover:bg-hh-pink hover:text-white text-hh-pink transition-all font-bold text-xs tracking-wider uppercase py-3 px-5 rounded flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+              >
+                <ExternalLink size={16} />
+                <span>OPEN FULL IMAGE</span>
+              </a>
+            </div>
+          )}
         </div>
       </main>
 
