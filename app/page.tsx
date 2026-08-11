@@ -25,7 +25,7 @@ export default function Home() {
     name: '',
     role: '',
     stack: '',
-    builderTitle: 'THE UNKNOWN CODEC',
+    builderTitle: '',
     zoom: 1.0,
     positionX: 0,
     positionY: 0,

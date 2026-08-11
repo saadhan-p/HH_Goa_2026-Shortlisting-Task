@@ -1,14 +1,13 @@
 'use client';
 
 import React from 'react';
-import { RefreshCw, User, Cpu, Briefcase } from 'lucide-react';
-import { generateTitle } from '../lib/titleGenerator';
+import { User, Cpu, Briefcase, Users } from 'lucide-react';
 
 interface BuilderFormProps {
   name: string;
   stack: string;
   role: string;
-  builderTitle: string;
+  builderTitle: string; // Used for Team Name
   onChange: (updates: { name?: string; stack?: string; role?: string; builderTitle?: string }) => void;
 }
 
@@ -31,13 +30,12 @@ export default function BuilderForm({
 
   const handleStackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.substring(0, 24); // Limit to 24 chars
-    const newTitle = generateTitle(val, builderTitle);
-    onChange({ stack: val, builderTitle: newTitle });
+    onChange({ stack: val });
   };
 
-  const handleRegenerateTitle = () => {
-    const newTitle = generateTitle(stack, builderTitle);
-    onChange({ builderTitle: newTitle });
+  const handleTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.substring(0, 24); // Limit to 24 chars
+    onChange({ builderTitle: val });
   };
 
   return (
@@ -102,24 +100,23 @@ export default function BuilderForm({
         </div>
       </div>
 
-      {/* Generated Title Display (with refresh action) */}
+      {/* Team Name Input */}
       <div className="space-y-1">
         <label className="flex items-center gap-1.5 font-bold text-hh-yellow uppercase tracking-wider text-[11px]">
-          BUILDER CLASS (GENERATED)
+          <Users size={13} />
+          TEAM NAME
         </label>
-        <div className="flex gap-2">
-          <div className="flex-1 bg-hh-darkest border border-[#053d24] rounded px-3 py-2.5 text-hh-pink font-bold uppercase tracking-wider flex items-center justify-between min-h-[38px]">
-            <span>{builderTitle || 'THE UNKNOWN CODEC'}</span>
-          </div>
-          
-          <button
-            type="button"
-            onClick={handleRegenerateTitle}
-            className="touch-target border border-[#053d24] hover:border-hh-pink bg-hh-darker hover:bg-hh-darkest text-gray-300 hover:text-white px-3.5 rounded flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-md"
-            title="Regenerate Builder Title"
-          >
-            <RefreshCw size={14} className="hover:rotate-45 transition-transform" />
-          </button>
+        <div className="relative">
+          <input
+            type="text"
+            value={builderTitle}
+            onChange={handleTeamNameChange}
+            placeholder="e.g. THE COFFEE CODECS"
+            className="w-full bg-hh-darker border border-[#053d24] focus:border-hh-yellow rounded px-3 py-2.5 text-white placeholder-gray-600 focus:outline-none transition-all"
+          />
+          <span className="absolute right-3 top-3 text-[10px] text-gray-600">
+            {builderTitle.length}/24
+          </span>
         </div>
       </div>
     </div>

@@ -476,7 +476,7 @@ export async function renderBuilderCard(
     { label: 'NAME', value: state.name || 'ANONYMOUS BUILDER' },
     { label: 'STACK', value: state.stack || 'STILL_DECIDING' },
     { label: 'ROLE', value: state.role || 'EXPERIMENTER' },
-    { label: 'TITLE', value: state.builderTitle || 'THE UNKNOWN CODEC', isAccent: true },
+    { label: 'TEAM', value: state.builderTitle || 'STILL_SEARCHING', isAccent: true },
     { label: 'STATUS', value: 'READY_TO_BUILD' }
   ];
 
