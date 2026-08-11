@@ -303,14 +303,6 @@ function drawUserPhoto(
     ctx.moveTo(midX, midY - 15); ctx.lineTo(midX, midY + 15);
     ctx.stroke();
 
-    // Tech scanning bar (animated look)
-    ctx.strokeStyle = 'rgba(243, 224, 59, 0.25)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(dx, dy + dh * 0.45);
-    ctx.lineTo(dx + dw, dy + dh * 0.45);
-    ctx.stroke();
-
     // Cyber-ocean horizon wave overlay at the bottom of the photo viewport
     drawWaves(ctx, dx, dy + dh - 10, dw, '#ff007f', 1.5);
     drawWaves(ctx, dx, dy + dh - 18, dw, 'rgba(0, 229, 255, 0.5)', 1);
