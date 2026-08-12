@@ -46,8 +46,34 @@ export async function POST(req: Request) {
           throw new Error(`Catbox upload status: ${catboxRes.status}`);
         }
       } catch (catboxErr) {
-        console.error('Catbox upload fallback failed:', catboxErr);
-        // Fall through to local write (which will fail with EROFS, showing the write error as a last resort)
+        console.error('Catbox upload fallback failed, trying tmpfiles.org:', catboxErr);
+      }
+
+      // 2b. Secondary zero-config fallback using tmpfiles.org (which is Cloudflare-friendly for serverless uploads)
+      try {
+        const tmpfilesFormData = new FormData();
+        tmpfilesFormData.append('file', image, filename);
+
+        const tmpfilesRes = await fetch('https://tmpfiles.org/api/v1/upload', {
+          method: 'POST',
+          body: tmpfilesFormData,
+        });
+
+        if (tmpfilesRes.ok) {
+          const resData = await tmpfilesRes.json();
+          if (resData.status === 'success' && resData.data?.url) {
+            // Convert page URL to direct download URL (insert /dl/)
+            const directUrl = resData.data.url.replace('https://tmpfiles.org/', 'https://tmpfiles.org/dl/');
+            return NextResponse.json({ url: directUrl });
+          } else {
+            throw new Error(`tmpfiles.org unexpected response: ${JSON.stringify(resData)}`);
+          }
+        } else {
+          throw new Error(`tmpfiles.org status: ${tmpfilesRes.status}`);
+        }
+      } catch (tmpfilesErr) {
+        console.error('tmpfiles.org upload fallback failed:', tmpfilesErr);
+        // Fall through to local write (which will fail with EROFS on Vercel)
       }
     }
 
