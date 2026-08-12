@@ -62,8 +62,23 @@ export async function POST(req: Request) {
         if (tmpfilesRes.ok) {
           const resData = await tmpfilesRes.json();
           if (resData.status === 'success' && resData.data?.url) {
-            // Convert page URL to direct download URL (insert /dl/)
-            const directUrl = resData.data.url.replace('https://tmpfiles.org/', 'https://tmpfiles.org/dl/');
+            const pageUrl = resData.data.url;
+            let directUrl = pageUrl.replace('https://tmpfiles.org/', 'https://tmpfiles.org/dl/');
+
+            // Fetch the HTML page to parse the true direct link containing the session token
+            try {
+              const pageRes = await fetch(pageUrl);
+              if (pageRes.ok) {
+                const html = await pageRes.text();
+                const match = html.match(/id="img_preview"\s+src="(https:\/\/tmpfiles\.org\/dl\/[^"]+)"/);
+                if (match && match[1]) {
+                  directUrl = match[1];
+                }
+              }
+            } catch (scrapeErr) {
+              console.error('Failed to scrape direct link, using URL replacement fallback:', scrapeErr);
+            }
+
             return NextResponse.json({ url: directUrl });
           } else {
             throw new Error(`tmpfiles.org unexpected response: ${JSON.stringify(resData)}`);
