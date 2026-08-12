@@ -58,50 +58,17 @@ export default function ShareButtons({
     const canvas = canvasRef.current;
     if (!canvas || disabled) return;
 
+    const xWindow = window.open('about:blank', '_blank');
+    if (xWindow) {
+      xWindow.opener = null;
+    }
     setIsSharing(true);
-    let xWindow: Window | null = null;
     try {
       const filename = getCleanFilename();
       
-      // Convert canvas to blob for upload/sharing
+      // Convert canvas to blob for upload
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('Blob generation failed');
-
-      const customCaption = `I just unlocked my HH Goa 2026 builder identity ⚡
-
-NAME: ${state.name || 'Anonymous'}
-STACK: ${state.stack || 'General'}
-ROLE: ${state.role || 'Developer'}
-TEAM: ${state.builderTitle || 'Still Searching'}
-
-Ready to build, break, and ship in Goa.
-
-#FrameInGoa #HHGoa @247pmstudio`;
-
-      // 1. Try native Web Share API first if supported (highly preferred for mobile/Safari to attach files directly)
-      const file = new File([blob], filename, { type: 'image/png' });
-      if (typeof navigator !== 'undefined' && navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            files: [file],
-            title: 'HH Goa 2026 Builder Card',
-            text: customCaption,
-          });
-          return;
-        } catch (shareErr) {
-          if (shareErr instanceof Error && shareErr.name === 'AbortError') {
-            console.log('User cancelled native sharing');
-            return;
-          }
-          console.warn('Native sharing failed, falling back to URL share:', shareErr);
-        }
-      }
-
-      // 2. Fall back to uploading the card and composing with X Web Intent
-      xWindow = window.open('about:blank', '_blank');
-      if (xWindow) {
-        xWindow.opener = null;
-      }
 
       // Upload to server
       const formData = new FormData();
@@ -121,6 +88,17 @@ Ready to build, break, and ship in Goa.
       const origin = window.location.origin;
       const url = `${origin}/share?img=${encodeURIComponent(data.url)}`;
 
+      const customCaption = `I just unlocked my HH Goa 2026 builder identity ⚡
+
+NAME: ${state.name || 'Anonymous'}
+STACK: ${state.stack || 'General'}
+ROLE: ${state.role || 'Developer'}
+TEAM: ${state.builderTitle || 'Still Searching'}
+
+Ready to build, break, and ship in Goa.
+
+#FrameInGoa #HHGoa @247pmstudio`;
+
       // Direct redirect to X tweet intent
       const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(customCaption)}&url=${encodeURIComponent(url)}`;
       if (xWindow) {
@@ -129,9 +107,7 @@ Ready to build, break, and ship in Goa.
         window.location.href = xUrl;
       }
     } catch (err) {
-      if (xWindow) {
-        xWindow.close();
-      }
+      xWindow?.close();
       if (err instanceof Error && err.name === 'AbortError') {
         console.log('Share request aborted');
       } else {
